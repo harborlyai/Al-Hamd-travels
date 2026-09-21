@@ -1,0 +1,188 @@
+import React, { useState } from 'react';
+import { 
+  Compass, 
+  FileText, 
+  Ticket, 
+  Globe, 
+  Phone, 
+  MapPin, 
+  User, 
+  CheckCircle, 
+  Menu, 
+  X,
+  ArrowRight
+} from 'lucide-react';
+
+export default function App() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    service: 'Umra & Hajj Services'
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (formData.name && formData.phone) {
+      setFormSubmitted(true);
+    }
+  };
+
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMenuOpen(false);
+  };
+
+  return (
+    <div className="min-h-screen bg-[#FDFBF7] text-[#2C3530] font-sans selection:bg-[#D4AF37] selection:text-white">
+      
+      {/* Sticky Navigation */}
+      <nav className="sticky top-0 z-50 bg-[#FDFBF7]/90 backdrop-blur-md border-b border-[#4A5D4E]/10 px-6 py-4 md:px-12 transition-all duration-300">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div className="flex flex-col cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
+            <span className="font-serif text-xl md:text-2xl font-bold tracking-wide text-[#3D5A46]">
+              AL HAMD
+            </span>
+            <span className="text-[10px] uppercase tracking-[0.25em] text-[#D4AF37] font-semibold -mt-1">
+              Tours International
+            </span>
+          </div>
+
+          {/* Desktop Links */}
+          <div className="hidden md:flex items-center space-x-10 font-medium text-sm tracking-wider uppercase text-[#4A5D4E]">
+            <button onClick={() => scrollToSection('services')} className="hover:text-[#D4AF37] transition-colors">Services</button>
+            <button onClick={() => scrollToSection('about')} className="hover:text-[#D4AF37] transition-colors">About Us</button>
+            <button onClick={() => scrollToSection('contact')} className="hover:text-[#D4AF37] transition-colors">Contact</button>
+            <button 
+              onClick={() => scrollToSection('contact')}
+              className="bg-[#3D5A46] text-[#FDFBF7] px-6 py-2.5 rounded-none font-semibold text-xs tracking-widest uppercase hover:bg-[#2A3E31] transition-all duration-300 border border-[#3D5A46] hover:border-[#D4AF37]"
+            >
+              Book Umra Now
+            </button>
+          </div>
+
+          {/* Mobile Menu Toggle */}
+          <button className="md:hidden text-[#3D5A46]" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+
+        {/* Mobile Dropdown */}
+        {isMenuOpen && (
+          <div className="md:hidden absolute top-full left-0 w-full bg-[#FDFBF7] border-b border-[#4A5D4E]/10 px-6 py-6 flex flex-col space-y-4 shadow-xl">
+            <button onClick={() => scrollToSection('services')} className="text-left py-2 font-medium tracking-wider uppercase">Services</button>
+            <button onClick={() => scrollToSection('about')} className="text-left py-2 font-medium tracking-wider uppercase">About Us</button>
+            <button onClick={() => scrollToSection('contact')} className="text-left py-2 font-medium tracking-wider uppercase">Contact</button>
+            <button 
+              onClick={() => scrollToSection('contact')}
+              className="bg-[#3D5A46] text-[#FDFBF7] w-full text-center py-3 font-semibold text-xs tracking-widest uppercase"
+            >
+              Book Umra Now
+            </button>
+          </div>
+        )}
+      </nav>
+
+      {/* Hero Section */}
+      <section className="relative min-h-[90vh] flex items-center justify-center bg-[#1A231C]">
+        {/* Background Image Layer */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-luminosity"
+          style={{ 
+            backgroundImage: `url('https://unsplash.com')` 
+          }}
+        />
+        {/* Soft dark gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#1A231C]/60 to-[#FDFBF7]" />
+
+        <div className="relative z-10 max-w-4xl mx-auto text-center px-6 mt-12 md:mt-0">
+          <span className="inline-flex items-center gap-2 bg-[#D4AF37]/20 border border-[#D4AF37] text-[#D4AF37] px-4 py-1.5 uppercase tracking-[0.2em] text-xs font-semibold mb-8 backdrop-blur-sm animate-pulse">
+            ✨ Umra Booking Started
+          </span>
+          <h1 className="font-serif text-4xl md:text-7xl font-light tracking-tight text-white mb-6 leading-tight">
+            Begin Your Sacred <br />
+            <span className="font-normal italic text-[#D4AF37]">Spiritual Journey</span>
+          </h1>
+          <p className="text-[#FDFBF7]/80 text-base md:text-xl font-light max-w-2xl mx-auto mb-10 leading-relaxed">
+            Al Hamd Tours International provides seamless, premium Hajj and Umra experiences crafted around ultimate devotion, peace of mind, and absolute comfort.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <button 
+              onClick={() => scrollToSection('contact')}
+              className="w-full sm:w-auto bg-[#D4AF37] text-[#1A231C] px-8 py-4 font-semibold text-xs tracking-widest uppercase hover:bg-white hover:text-[#3D5A46] transition-all duration-300 flex items-center justify-center gap-2"
+            >
+              Reserve Your Spot <ArrowRight size={14} />
+            </button>
+            <button 
+              onClick={() => scrollToSection('services')}
+              className="w-full sm:w-auto bg-transparent border border-white/40 text-white px-8 py-4 font-semibold text-xs tracking-widest uppercase hover:bg-white/10 transition-all duration-300"
+            >
+              Explore Services
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Core Services Section */}
+      <section id="services" className="py-24 px-6 md:px-12 max-w-7xl mx-auto scroll-mt-20">
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <span className="text-xs uppercase tracking-[0.3em] text-[#D4AF37] font-bold block mb-3">Our Offerings</span>
+          <h2 className="font-serif text-3xl md:text-5xl font-light text-[#3D5A46]">Complete Pilgrimage & Travel Solutions</h2>
+          <div className="h-[1px] w-20 bg-[#D4AF37] mx-auto mt-6"></div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Card 1 */}
+          <div className="bg-white border border-[#4A5D4E]/10 p-8 flex flex-col justify-between hover:shadow-xl hover:border-[#D4AF37]/50 transition-all duration-300 group">
+            <div>
+              <div className="w-12 h-12 bg-[#3D5A46]/5 flex items-center justify-center text-[#3D5A46] mb-6 group-hover:bg-[#3D5A46] group-hover:text-white transition-all duration-300">
+                <Compass size={24} />
+              </div>
+              <h3 className="font-serif text-xl font-normal text-[#3D5A46] mb-3">Umra & Hajj Services</h3>
+              <p className="text-sm text-[#4A5D4E]/80 font-light leading-relaxed">
+                Premium packages tailored with premium hotel accommodations near the Haram, dedicated local guidance, and smooth transportation.
+              </p>
+            </div>
+          </div>
+
+          {/* Card 2 */}
+          <div className="bg-white border border-[#4A5D4E]/10 p-8 flex flex-col justify-between hover:shadow-xl hover:border-[#D4AF37]/50 transition-all duration-300 group">
+            <div>
+              <div className="w-12 h-12 bg-[#3D5A46]/5 flex items-center justify-center text-[#3D5A46] mb-6 group-hover:bg-[#3D5A46] group-hover:text-white transition-all duration-300">
+                <Globe size={24} />
+              </div>
+              <h3 className="font-serif text-xl font-normal text-[#3D5A46] mb-3">Visa & VFS Services</h3>
+              <p className="text-sm text-[#4A5D4E]/80 font-light leading-relaxed">
+                End-to-end processing and expert document verification for Umra visas, tourist visas, and professional VFS submission support.
+              </p>
+            </div>
+          </div>
+
+          {/* Card 3 */}
+          <div className="bg-white border border-[#4A5D4E]/10 p-8 flex flex-col justify-between hover:shadow-xl hover:border-[#D4AF37]/50 transition-all duration-300 group">
+            <div>
+              <div className="w-12 h-12 bg-[#3D5A46]/5 flex items-center justify-center text-[#3D5A46] mb-6 group-hover:bg-[#3D5A46] group-hover:text-white transition-all duration-300">
+                <Ticket size={24} />
+              </div>
+              <h3 className="font-serif text-xl font-normal text-[#3D5A46] mb-3">Flight & Train Tickets</h3>
+              <p className="text-sm text-[#4A5D4E]/80 font-light leading-relaxed">
+                Fast, optimized booking structures for domestic and international air travel alongside high-speed rail connections.
+              </p>
+            </div>
+          </div>
+
+          {/* Card 4 */}
+          <div className="bg-white border border-[#4A5D4E]/10 p-8 flex flex-col justify-between hover:shadow-xl hover:border-[#D4AF37]/50 transition-all duration-300 group">
+            <div>
+              <div className="w-12 h-12 bg-[#3D5A46]/5 flex items-center justify-center text-[#3D5A46] mb-6 group-hover:bg-[#3D5A46] group-hover:text-white transition-all duration-300">
+                <FileText size={24} />
+              </div>
